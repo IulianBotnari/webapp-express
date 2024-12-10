@@ -13,3 +13,5 @@ server.listen(PORT, () => {
 })
 
 server.get('/', router)
+
+server.get('/:id', router)
