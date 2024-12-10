@@ -10,14 +10,14 @@ const router = require('./Routes/router.js')
 const HOST = 'http://localhost:'
 const PORT = 3000
 
-server.use(NotFound)
-
-server.use(ServerErrorsHandler)
 
 server.get('/', router)
 
 server.get('/:id', router)
 
+server.use(NotFound)
+
+server.use(ServerErrorsHandler)
 
 server.listen(PORT, () => {
     console.log(`Server running at ${HOST}${PORT}`)

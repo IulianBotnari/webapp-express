@@ -5,7 +5,8 @@ const index = ('/', (req, res) => {
     const sql = 'SELECT * FROM movies'
 
     connection.query(sql, (err, films) => {
-        if (err) return res.status(404)
+        if (err) return res.status(500).json({ err: err })
+        if (films.length === 0) return res.status(404).json({ err: 'book not found' })
 
         res.json(films)
     })
@@ -20,12 +21,13 @@ const show = ('/:id', (req, res) => {
     const id = req.params.id
 
     connection.query(sql, [id], (err, filmById) => {
-        if (err) return res.status(404)
+        // if (err) return res.status(404)
 
 
 
         connection.query(sqlFilmsReview, [id], (err, filmsReviews) => {
-            if (err) return res.status(404)
+            if (err) return res.status(500).json({ err: err })
+            if (filmsReviews.length === 0) return res.status(404).json({ err: 'book not found' })
             console.log(filmsReviews);
 
             const movieWithReview = {
