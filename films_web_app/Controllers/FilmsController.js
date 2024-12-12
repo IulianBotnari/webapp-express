@@ -47,7 +47,42 @@ const show = ('/:id', (req, res) => {
 
 
 })
+const addreview = ("/post", (req, res) => {
+    const { movie_id, name, vote, text } = req.body
+
+    if (!movie_id || !name || !vote || !text) {
+        return res.status(400).json('I campi sono obbligatori')
+    }
+
+    const postQuery = 'INSERT INTO `films_db`.`reviews` (`movie_id`, `name`, `vote`, `text`) VALUES (?, ?, ?, ?)'
+
+    connection.query(postQuery, [movie_id, name, vote, text], (err, postedReview) => {
+        console.log(postedReview);
+
+
+        if (err) {
+            console.error('Errore:', err)
+            return res.status(500).json('Errore nel insermento')
+        }
+
+        res.status(200).json('Recensione aggiunta con successo!!')
+
+    })
+
+
+
+})
+
+
+
+
+
+
+
+
+
 module.exports = {
     index,
-    show
+    show,
+    addreview
 }
